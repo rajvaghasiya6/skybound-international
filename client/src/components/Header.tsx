@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import logoImage from "@assets/571688945_17847210576592897_4765979075102300815_n_1765435933532.jpg";
+import logoImage from "@assets/logo.jpg";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";

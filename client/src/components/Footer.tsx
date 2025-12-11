@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
-import { SiLinkedin, SiFacebook, SiInstagram } from "react-icons/si";
+import logoImage from "@assets/logo.jpg";
 import { motion } from "framer-motion";
-import logoImage from "@assets/571688945_17847210576592897_4765979075102300815_n_1765435933532.jpg";
+import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
+import { SiFacebook, SiInstagram, SiLinkedin } from "react-icons/si";
 
 const quickLinks = [
   { label: "Home", href: "#home" },
