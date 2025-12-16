@@ -11,6 +11,15 @@ export default defineConfig({
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
+  server: {
+    fs: {
+      // Allow serving and importing assets from the shared attached_assets folder
+      allow: [
+        path.resolve(import.meta.dirname, "client"),
+        path.resolve(import.meta.dirname, "attached_assets"),
+      ],
+    },
+  },
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,

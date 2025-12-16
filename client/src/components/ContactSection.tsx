@@ -25,10 +25,14 @@ const productInterests = [
   "Other Products",
 ];
 
+// The email where you want to receive inquiries
+const RECIPIENT_EMAIL = "contact@skyboundinternational.co.in";
+
 export default function ContactSection() {
   const { toast } = useToast();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,20 +40,26 @@ export default function ContactSection() {
     product: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [isSubmitting, setIsSubmitting] = useState(false); // We still need this for the loading animation
+
+  // --- SUBMIT LOGIC REMAINS SIMPLE FOR HTML FORM ---
+  const handleSubmit = (e: React.FormEvent) => {
+    // We only set the submitting state here to show the spinner.
+    // The actual form data is handled by the 'action' attribute on the <form> element.
     setIsSubmitting(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // NOTE: After a successful Formsubmit redirect, the page will reload.
+    // If you want a seamless experience, you'll need to use a client-side fetch (like the Formspree example)
+    // or configure a redirect URL with Formsubmit that redirects back to your page with a success parameter.
     
+    // Simulating the submission start before the browser takes over
     toast({
-      title: "Inquiry Submitted!",
-      description: "Thank you for your interest. We'll get back to you within 24 hours.",
+        title: "Sending Inquiry...",
+        description: "Please wait a moment while we send your message.",
     });
-    setFormData({ name: "", email: "", country: "", product: "", message: "" });
-    setIsSubmitting(false);
+    
+    // The browser handles the actual POST request to Formsubmit now.
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -72,7 +82,8 @@ export default function ContactSection() {
     {
       icon: MapPin,
       label: "Address",
-      value: "311, 3rd Floor, Shree Krishna Industrial Estate- 1, Surat - Kamrej Hwy, Laskana, Surat, Gujarat 395006, India",
+      value:
+        "311, 3rd Floor, Shree Krishna Industrial Estate- 1, Surat - Kamrej Hwy, Laskana, Surat, Gujarat 395006, India",
       href: null,
     },
     {
@@ -84,42 +95,57 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-muted/30 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4" ref={ref}>
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <Badge variant="secondary" className="mb-4">Contact Us</Badge>
-          <h2 className="font-serif text-3xl lg:text-5xl font-bold mb-4">
+    <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 overflow-hidden" id="contact" ref={ref}>
+      <div className="container px-4 mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <Badge variant="outline" className="mb-4 px-4 py-1 text-sm border-primary/20 text-primary bg-primary/5">
+            Connect With Us
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">
             Let's Start a Conversation
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Ready to source premium Indian products? Get in touch with our export team 
-            for inquiries, quotes, or partnership opportunities.
+          <p className="text-muted-foreground text-lg">
+            Ready to source premium Indian products? Get in touch with our export team for inquiries, quotes, or partnership opportunities.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="border-0 shadow-xl">
+            <Card className="border-0 shadow-xl bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
               <CardContent className="p-6 lg:p-8">
                 <h3 className="font-semibold text-xl mb-6 flex items-center gap-2">
-                  <Send className="w-5 h-5 text-primary" />
-                  Send us a Message
+                  <Send className="w-5 h-5 text-primary" /> Send us a Message
                 </h3>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                {/* --- FORMSUBMIT INTEGRATION --- */}
+                <form 
+                    onSubmit={handleSubmit} 
+                    className="space-y-6"
+                    // Set action to Formsubmit endpoint with the target email
+                    action={`https://formsubmit.co/${RECIPIENT_EMAIL}`}
+                    method="POST"
+                >
+                    {/* Hidden fields for Formsubmit configuration */}
+                    {/* Sets the 'Reply To' address in the received email */}
+                    <input type="hidden" name="_replyto" value={formData.email} /> 
+                    {/* Custom subject line */}
+                    <input type="hidden" name="_subject" value={`New Inquiry: ${formData.product} - ${formData.name}`} /> 
+                    {/* Disables CAPTCHA/recaptcha (only works after 1 verified submission) */}
+                    <input type="hidden" name="_captcha" value="false" /> 
+                    {/* Optional: Redirect URL after submission */}
+                    {/* <input type="hidden" name="_next" value="YOUR_SUCCESS_PAGE_URL" /> */}
+
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Your Name</Label>
                       <Input
                         id="name"
+                        // REQUIRED: Add 'name' attribute for Formsubmit
+                        name="Name"
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
@@ -133,6 +159,8 @@ export default function ContactSection() {
                       <Input
                         id="email"
                         type="email"
+                        // REQUIRED: Add 'name' attribute for Formsubmit
+                        name="Email"
                         placeholder="john@company.com"
                         value={formData.email}
                         onChange={(e) => handleInputChange("email", e.target.value)}
@@ -148,6 +176,8 @@ export default function ContactSection() {
                       <Label htmlFor="country">Country</Label>
                       <Input
                         id="country"
+                        // REQUIRED: Add 'name' attribute for Formsubmit
+                        name="Country"
                         placeholder="United States"
                         value={formData.country}
                         onChange={(e) => handleInputChange("country", e.target.value)}
@@ -161,9 +191,10 @@ export default function ContactSection() {
                       <Select
                         value={formData.product}
                         onValueChange={(value) => handleInputChange("product", value)}
+                        // REQUIRED: Use the hidden input for Select value
                       >
-                        <SelectTrigger id="product" data-testid="select-product" className="h-11">
-                          <SelectValue placeholder="Select product" />
+                        <SelectTrigger className="h-11" data-testid="select-product">
+                          <SelectValue placeholder="Select product category" />
                         </SelectTrigger>
                         <SelectContent>
                           {productInterests.map((product) => (
@@ -173,6 +204,8 @@ export default function ContactSection() {
                           ))}
                         </SelectContent>
                       </Select>
+                      {/* Hidden input to capture Select value for Formsubmit */}
+                      <input type="hidden" name="Product Interest" value={formData.product} />
                     </div>
                   </div>
 
@@ -180,8 +213,10 @@ export default function ContactSection() {
                     <Label htmlFor="message">Your Message</Label>
                     <Textarea
                       id="message"
-                      placeholder="Tell us about your requirements, quantities, and any specific questions..."
-                      rows={4}
+                      // REQUIRED: Add 'name' attribute for Formsubmit
+                      name="Message"
+                      placeholder="Tell us about your requirements (Quantity, Packaging, Destination)..."
+                      className="min-h-[120px] resize-y"
                       value={formData.message}
                       onChange={(e) => handleInputChange("message", e.target.value)}
                       required
@@ -204,17 +239,19 @@ export default function ContactSection() {
                         />
                       ) : (
                         <>
-                          Send Inquiry
-                          <Send className="w-4 h-4 ml-2" />
+                          Send Inquiry <Send className="w-4 h-4 ml-2" />
                         </>
                       )}
                     </Button>
                   </motion.div>
                 </form>
+                {/* --- END FORMSUBMIT INTEGRATION --- */}
               </CardContent>
             </Card>
           </motion.div>
 
+          {/* Contact Info Side */}
+          {/* ... (rest of the component remains the same) ... */}
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, x: 50 }}
@@ -257,6 +294,22 @@ export default function ContactSection() {
                       </div>
                     </motion.div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-xl overflow-hidden">
+              <CardContent className="p-0">
+                <div className="h-64 md:h-80 w-full">
+                  <iframe
+                    title="Skybound International Location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1044.6056881931283!2d72.92872466960527!3d21.25335744867023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04525759d8d35%3A0x4510bb467acbf462!2sSkybound%20International!5e1!3m2!1sen!2sus!4v1765792776670!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
               </CardContent>
             </Card>

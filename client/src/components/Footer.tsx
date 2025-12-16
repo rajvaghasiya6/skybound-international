@@ -6,12 +6,24 @@ import { motion } from "framer-motion";
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { SiFacebook, SiInstagram, SiLinkedin } from "react-icons/si";
 
-const quickLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Why Choose Us", href: "#why-us" },
-  { label: "Contact", href: "#contact" },
+import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
+
+type QuickLink =
+  | { label: string; type: "section"; href: string }
+  | { label: string; type: "external"; href: string };
+
+const quickLinks: QuickLink[] = [
+  { label: "Home", type: "section", href: "#home" },
+  { label: "About Us", type: "section", href: "#about" },
+  { label: "Products", type: "section", href: "#products" },
+  {
+    label: "Quality Assurance & Certificates",
+    type: "section",
+    href: "#quality",
+  },
+  { label: "Why Choose Us", type: "section", href: "#why-us" },
+  { label: "Connect With Us", type: "section", href: "#contact" },
+  { label: "Brochure", type: "external", href: brochurePdf },
 ];
 
 const productLinks = [
@@ -121,14 +133,31 @@ export default function Footer() {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <motion.button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-background/70 hover:text-background text-sm transition-colors"
-                    data-testid={`link-footer-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                    whileHover={{ x: 5 }}
-                  >
-                    {link.label}
-                  </motion.button>
+                  {link.type === "section" ? (
+                    <motion.button
+                      onClick={() => scrollToSection(link.href)}
+                      className="text-background/70 hover:text-background text-sm transition-colors"
+                      data-testid={`link-footer-${link.label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      whileHover={{ x: 5 }}
+                    >
+                      {link.label}
+                    </motion.button>
+                  ) : (
+                    <motion.a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-background/70 hover:text-background text-sm transition-colors inline-block"
+                      data-testid={`link-footer-${link.label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      whileHover={{ x: 5 }}
+                    >
+                      {link.label}
+                    </motion.a>
+                  )}
                 </li>
               ))}
             </ul>

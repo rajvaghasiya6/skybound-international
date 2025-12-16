@@ -1,16 +1,23 @@
 import { Button } from "@/components/ui/button";
 import logoImage from "@assets/logo.jpg";
+import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 
-const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Contact", href: "#contact" },
+type NavItem =
+  | { label: string; type: "section"; href: string }
+  | { label: string; type: "external"; href: string };
+
+const navItems: NavItem[] = [
+  { label: "Home", type: "section", href: "#home" },
+  { label: "About Us", type: "section", href: "#about" },
+  { label: "Products", type: "section", href: "#products" },
+  { label: "Quality Assurance & Certificates", type: "section", href: "#quality" },
+  { label: "Why Choose Us", type: "section", href: "#why-us" },
+  { label: "Connect With Us", type: "section", href: "#contact" },
+  { label: "Brochure", type: "external", href: brochurePdf },
 ];
 
 export default function Header() {
@@ -29,8 +36,9 @@ export default function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-10xl mx-auto px-4">
         <div className="flex items-center justify-between gap-4 h-16 lg:h-20">
+          {/* Logo - Left Side */}
           <motion.a
             href="#home"
             onClick={(e) => {
@@ -55,26 +63,57 @@ export default function Header() {
             </div>
           </motion.a>
 
-          <nav className="hidden lg:flex items-center gap-1">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Button
-                  variant="ghost"
-                  onClick={() => scrollToSection(item.href)}
-                  className="font-medium"
+          {/* Desktop Navigation - Right Side */}
+          <div className="hidden lg:flex items-center gap-1 ml-auto">
+            <nav className="flex items-center gap-1">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  {item.label}
-                </Button>
-              </motion.div>
-            ))}
-          </nav>
+                  {item.type === "section" ? (
+                    <Button
+                      variant="ghost"
+                      onClick={() => scrollToSection(item.href)}
+                      className="font-medium"
+                    >
+                      {item.label}
+                    </Button>
+                  ) : (
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="font-medium"
+                    >
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.label}
+                      </a>
+                    </Button>
+                  )}
+                </motion.div>
+              ))}
+            </nav>
 
-          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+              <Button
+                onClick={() => scrollToSection("#contact")}
+                className="shadow-lg"
+              >
+                Request Quote
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Mobile Menu Controls */}
+          <div className="flex items-center gap-2 lg:hidden">
             <ThemeToggle />
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
               <Button
@@ -89,7 +128,6 @@ export default function Header() {
               size="icon"
               variant="ghost"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
@@ -113,13 +151,30 @@ export default function Header() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Button
-                      variant="ghost"
-                      className="justify-start w-full"
-                      onClick={() => scrollToSection(item.href)}
-                    >
-                      {item.label}
-                    </Button>
+                    {item.type === "section" ? (
+                      <Button
+                        variant="ghost"
+                        className="justify-start w-full"
+                        onClick={() => scrollToSection(item.href)}
+                      >
+                        {item.label}
+                      </Button>
+                    ) : (
+                      <Button
+                        asChild
+                        variant="ghost"
+                        className="justify-start w-full"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {item.label}
+                        </a>
+                      </Button>
+                    )}
                   </motion.div>
                 ))}
 
