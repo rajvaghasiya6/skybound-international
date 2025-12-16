@@ -27,6 +27,7 @@ const productInterests = [
 
 // The email where you want to receive inquiries
 const RECIPIENT_EMAIL = "contact@skyboundinternational.co.in";
+const FORMSUBMIT_TOKEN = "80000598ba1e609d2de073b48edf758a";
 
 export default function ContactSection() {
   const { toast } = useToast();
@@ -126,7 +127,7 @@ export default function ContactSection() {
                     onSubmit={handleSubmit} 
                     className="space-y-6"
                     // Set action to Formsubmit endpoint with the target email
-                    action={`https://formsubmit.co/${RECIPIENT_EMAIL}`}
+                   action={`https://formsubmit.co/${FORMSUBMIT_TOKEN}`}
                     method="POST"
                 >
                     {/* Hidden fields for Formsubmit configuration */}
