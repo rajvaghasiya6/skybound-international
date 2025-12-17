@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { SiFacebook, SiInstagram, SiLinkedin } from "react-icons/si";
 
+import { products } from "@/data/products";
 import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
 
 type QuickLink =
@@ -26,13 +27,7 @@ const quickLinks: QuickLink[] = [
   { label: "Brochure", type: "external", href: brochurePdf },
 ];
 
-const productLinks = [
-  "Premium Spices",
-  "Basmati Rice",
-  "Pulses & Lentils",
-  "Tea & Beverages",
-  "Nuts & Dry Fruits",
-];
+const productLinks = products.slice(0, 6);
 
 export default function Footer() {
   const scrollToSection = (href: string) => {
@@ -166,14 +161,14 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-5">Our Products</h4>
             <ul className="space-y-3">
-              {productLinks.map((product) => (
-                <li key={product}>
+              {productLinks.map((product, index) => (
+                <li key={index}>
                   <motion.button
                     onClick={() => scrollToSection("#products")}
                     className="text-background/70 hover:text-background text-sm transition-colors"
                     whileHover={{ x: 5 }}
                   >
-                    {product}
+                    {product.title}
                   </motion.button>
                 </li>
               ))}

@@ -1,4 +1,3 @@
-
 import blackPepperPowder from "@assets/generated_images/black-pepper-powder.jpg";
 import blackPepper from "@assets/generated_images/black-pepper.jpg";
 import chilliPowder from "@assets/generated_images/chilli-powder.jpg";
@@ -22,9 +21,19 @@ export type ProductSpec = {
   value: string;
 };
 
-export type ProductVariety = {
-  name: string;
-  description: string;
+export type ExportSpecification = {
+  formAvailable?: string;
+  type?: string;
+  usage?: string;
+  varietyAvailable?: string;
+  color?: string;
+  harvestingSeason?: string;
+  shelfLife?: string;
+  storageCondition?: string;
+  microbiological?: string;
+  packaging?: string;
+  labelling?: string;
+  moq?: string;
 };
 
 export type Product = {
@@ -44,6 +53,7 @@ export type Product = {
   varieties?: string[];
   importingCountries?: string[];
   whyPreferred: string[];
+  exportSpecification?: ExportSpecification;
 };
 
 export const products: Product[] = [
@@ -102,13 +112,6 @@ export const products: Product[] = [
       "BOLD Quality (Around 580 G/L): Large-sized, high-density pepper with strong pungency.",
       "ASTA Quality (Around 570 G/L): High-quality pepper meeting international ASTA (American Spice Trade Association) standards.",
       "BB1 Quality (550 G/L): Medium-bold grains, widely used for food processing.",
-      "BB2 Quality (500 G/L): Slightly lower density than BB1, preferred for bulk spice markets.",
-      "FAQ Quality (Around 500 G/L): Fair Average Quality; commonly exported for general consumption.",
-      "Size-Based Grades (Pinhead):",
-      "Pinhead 1mm",
-      "Pinhead 1.5mm",
-      "Pinhead 2mm",
-      "Pinhead 2.5mm",
     ],
     importingCountries: [
       "United States",
@@ -126,6 +129,20 @@ export const products: Product[] = [
       "Global Compliance: Indian black pepper meets the stringent quality standards of the US, EU, and Middle Eastern markets.",
       "Diverse Applications: Used in cooking, pharmaceuticals, cosmetics, and essential oil production.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole Seed",
+      type: "Machine Clean & Sortex Clean",
+      usage: "Food Ind, Pharmaceutical, Cosmetic & Perfume Ind",
+      varietyAvailable: "MG, TGEB, TGSEB",
+      color: "Dark Brown to Black",
+      harvestingSeason: "Dec - Feb",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "black-pepper-powder",
@@ -177,6 +194,20 @@ export const products: Product[] = [
       "Bold Aroma and Flavor: It is valued for its strong, sharp, and woody fragrance and bold flavor, which makes it a sought-after \"King of Spices\".",
       "Rich in Oils and Antioxidants: The spice is rich in essential oils and antioxidants, which contribute to its desirable flavor and medicinal properties.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind, Pharmaceutical, Cosmetic & Perfume Ind",
+      varietyAvailable: "MG, TGEB, TGSEB",
+      color: "Dark Brown to Black",
+      harvestingSeason: "Dec - Feb",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "chilli-powder",
@@ -231,6 +262,20 @@ export const products: Product[] = [
       "Processing and Value Addition: India is a leader in both whole and powdered chilli production. The convenience and versatility of chilli powder make it a staple in global food processing, adding value to raw chilies through processing into powders, sauces, and extracts.",
       "Competitive Pricing and Strong Supply Chain: As the world's largest producer, India can offer competitive pricing while also ensuring a consistent and reliable supply chain.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; Culinary; Spice Blends; Pharmaceutical; HoReCa; Cosmetic",
+      varietyAvailable: "Teja S-17; Sannam S-4; Wrinkle S-273; Byadagi",
+      color: "Natural Red As per Grade",
+      harvestingSeason: "Jan – April",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "cloves",
@@ -294,11 +339,21 @@ export const products: Product[] = [
       "High eugenol content: This makes them particularly valuable for extraction in the wellness, aromatherapy, and pharmaceutical industries.",
       "Culinary applications: They are a key ingredient in many spice blends, curries, baked goods, and beverages worldwide.",
       "Industrial uses: Beyond food, Indian cloves are essential for making perfumes, essential oils, and certain pharmaceutical products.",
-      "Medicinal benefits: Their antioxidant, anti-inflammatory, and digestive properties are recognized and drive demand in health-focused products and traditional medicine.",
-      "Traditional cultivation: Traditional farming methods contribute to the perceived high quality of Indian cloves.",
-      "Major producer: India is a significant producer of cloves, with the majority grown in states like Tamil Nadu, particularly in the Kanyakumari district.",
-      "Global reach: Indian cloves are exported to major markets across Europe, North America, the Middle East, and Asia, indicating consistent global demand.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole Seed",
+      type: "Machine Clean & Sortex Clean",
+      usage: "Food Ind, Pharmaceutical, Personal Car & Cosmetics",
+      varietyAvailable: "HPS; Grade-1; Grade-2; Grade-3",
+      color: "Natural Brown",
+      harvestingSeason: "April - May",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "coriander-powder",
@@ -346,6 +401,20 @@ export const products: Product[] = [
       "Variety: Varieties like Badami and Eagle are specifically sought after for their high oil content.",
       "Health benefits: The powder is also valued for its various health properties, such as aiding digestion and being rich in antioxidants.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; Pharmaceutical; Culinary; Cosmetic",
+      varietyAvailable: "Eagle; Scooter; Single-Double Parrot; Brown (Badami)",
+      color: "Light Brown to Yellowish Brown",
+      harvestingSeason: "Feb - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "coriander-seed",
@@ -404,7 +473,6 @@ export const products: Product[] = [
       "Scooter: Another common grade. A smaller-seeded variety with an intense, pungent flavour. This grade consists of smaller seeds compared to the Eagle and is valued for its intense, pungent flavor.",
       "Single Parrot / Double Parrot: These grades are known for their high quality and typically have a green color. These grades are characterized by their green color, which indicates better quality, and are traded at a premium.",
       "Brown/Badami: This grade is produced when seeds are over-dried, leading to a lower price.",
-      "Green Medium/Extra/Special: A common grade based on the color and size of the seed after drying. Finer quality grades with a desirable green color, which fetch a premium price in the market.",
     ],
     importingCountries: [
       "China",
@@ -423,8 +491,21 @@ export const products: Product[] = [
       "Competitive pricing: As a top global producer, India can offer competitive pricing, which is a major draw for international buyers.",
       "Consistent availability: India's large-scale production ensures a consistent supply to meet global demand, making it a reliable source for buyers worldwide.",
       "Export infrastructure: India has a strong export infrastructure and a network of processors and exporters capable of handling large volumes and meeting the demands of the global market.",
-      "Competitive Pricing: The capacity for bulk sales and efficient supply chains allows Indian exporters to offer cost-effective rates, making it an economically attractive option for international buyers.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole Seed & Split",
+      type: "Machine Clean & Sortex Clean",
+      usage: "Food Ind; Culinary Use; Pharmaceutical; Cosmetic",
+      varietyAvailable: "Eagle; Scooter, Single-Double Parrot; Brown (Badami)",
+      color: "As Per Grade",
+      harvestingSeason: "Feb - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "cumin-powder",
@@ -480,6 +561,20 @@ export const products: Product[] = [
       "Favorable Growing Conditions: States like Gujarat and Rajasthan provide ideal climate and soil conditions for high-quality cumin cultivation.",
       "Early Harvest: The February-March harvest season provides a logistical advantage, as it is several months ahead of other major producer countries.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; Pharmaceutical; Culinary; Cosmetic",
+      varietyAvailable: "Brown Cumin Powder; Black Cumin Powder",
+      color: "Dark Brown to Black",
+      harvestingSeason: "Feb – March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "cumin-seed",
@@ -543,6 +638,20 @@ export const products: Product[] = [
       "Early Harvest: India's harvest period (February-March) often precedes that of other major producers, allowing for a strategic market entry.",
       "Cost-effective Pricing: Large-scale farming and a strong supply chain make Indian Cumin competitively priced for importers operating in price-sensitive markets.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole Seed",
+      type: "Machine Clean & Sortex Clean",
+      usage: "Food Ind; Pharmaceutical; Culinary; Cosmetic",
+      varietyAvailable: "Singapore; Europe",
+      color: "Natural Brown",
+      harvestingSeason: "Feb – March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "dehydrated-garlic",
@@ -602,6 +711,17 @@ export const products: Product[] = [
       "Convenience and Versatility: Dehydrated garlic offers immense convenience, eliminating the need for peeling, chopping, and the associated labor costs. It is available in various forms (flakes, minced, chopped, granules) suitable for a wide array of applications in the food processing industry.",
       "Extended Shelf Life and Cost Efficiency: The dehydration process removes moisture, resulting in a product with a long shelf life (up to 12-24 months or more) that is lightweight and compact.",
     ],
+    exportSpecification: {
+      formAvailable: "Flakes; Chopped; Minced; Granules",
+      usage: "Food Ind; HoReCa; Spice Blends; Pharmaceuticals",
+      color: "Natural White to Brown",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "dehydrated-garlic-powder",
@@ -648,6 +768,18 @@ export const products: Product[] = [
       "Lower Shipping Costs: Its lightweight and compact form significantly lowers shipping costs compared to fresh garlic.",
       "Consistent Quality: It offers consistent quality and flavor year-round, regardless of weather or harvest cycles.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; HoReCa; Spice Blends; Pharmaceuticals; Snacks",
+      color: "Natural White to Brown",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "dehydrated-onion",
@@ -702,10 +834,6 @@ export const products: Product[] = [
       "Dehydrated Red Onion Minced",
       "Dehydrated Red Onion Granules",
       "Pink Onion Products:",
-      "Dehydrated Pink Onion Flakes",
-      "Dehydrated Pink Onion Chopped",
-      "Dehydrated Pink Onion Minced",
-      "Dehydrated Pink Onion Granules",
     ],
     importingCountries: [
       "United States",
@@ -723,6 +851,19 @@ export const products: Product[] = [
       "Cost-Effectiveness: Competitive labour costs and efficient, large-scale production enable Indian exporters to offer high-quality dehydrated onions at competitive prices compared to other global sources. This allows international buyers to manage their ingredient costs effectively.",
       "Versatility in Forms: Indian manufacturers offer a wide range of dehydrated onion products - flakes, chopped, minced, granules, and powder - catering to the specific needs and textures required for different applications in soups, sauces, snacks, and ready-to-eat meals.",
     ],
+    exportSpecification: {
+      formAvailable: "Flakes; Chopped; Minced; Granules",
+      usage: "Food Ind; HoReCa; Spice Blends; Ready to eat Products",
+      varietyAvailable: "Red Onion; Pink Onion; White Onion",
+      color: "Natural Red to White",
+      harvestingSeason: "Jan - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "dehydrated-onion-powder",
@@ -775,6 +916,20 @@ export const products: Product[] = [
       "Easy Convenience : Dehydrated onion powder also eliminate the need for peeling and chopping, saving significant labor and preparation time in commercial kitchens and processing plants.",
       "Large-scale production: India's high onion yield and mass production capabilities ensure a reliable and continuous supply to meet high global demand.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; HoReCa; Spice Blends; Ready to Eat Meals",
+      varietyAvailable: "Red; Pink; White Onion Powder",
+      color: "Natuaral Red to White",
+      harvestingSeason: "Jan - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "dry-ginger-powder",
@@ -828,6 +983,19 @@ export const products: Product[] = [
       "World's Leading Producer: India is the world's largest producer of ginger, with a production capacity that supports substantial global demand.",
       "Established Expertise: The country has a long history of spice cultivation and processing, with significant expertise in making high-quality ginger powder.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; Spice Blends; Pharmaceutical; Cosmetic",
+      color: "Yellowish Brown",
+      harvestingSeason: "Jan - Feb",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "dry-red-chilli",
@@ -891,6 +1059,20 @@ export const products: Product[] = [
       "Variety and Quality: India produces a vast range of chillies, from mild to extremely hot, catering to diverse culinary needs and taste preferences worldwide.",
       "Flavor and Color: Indian chillies are prized for their vibrant red color and rich, deep flavor, often achieved without synthetic additives due to ideal growing conditions and traditional drying methods.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole Dry",
+      type: "With/ Without Stem",
+      usage: "Food Ind; Culinary; Spice Blends; Pharmaceutical; HoReCa; Cosmetic",
+      varietyAvailable: "Teja S-17; Sannam S-4; Wrinkle S-273; Byadagi",
+      color: "Natural Red As per Grade",
+      harvestingSeason: "Jan – April",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "mustard-seed",
@@ -950,6 +1132,20 @@ export const products: Product[] = [
       "Wide Availability: India can provide a wide availability of mustard seeds throughout the year.",
       "Variety of Types: India produces all three main types of mustard seeds - yellow, brown, and black - catering to diverse global culinary and industrial demands.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole Seed",
+      type: "Machine Clean & Sortex Clean",
+      usage: "Food Ind; Oil Ind; Pharmaceutical; Animal Feed",
+      varietyAvailable: "Yellow; Brown; Black Mustard Seed",
+      color: "Natural Yellow to Black",
+      harvestingSeason: "Feb - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "turmeric-finger",
@@ -1014,6 +1210,20 @@ export const products: Product[] = [
       "Diverse varieties: India offers a wide range of turmeric varieties, allowing exporters to cater to diverse buyer needs based on flavor, color, and regional identity.",
       "Quality control and purity: Indian exporters adhere to stringent quality control measures, including inspections and certifications like those from the FSSAI and Indian Spice Board, to ensure products meet international standards. Whole fingers are also less prone to adulteration with dyes or fillers compared to powdered turmeric.",
     ],
+    exportSpecification: {
+      formAvailable: "Whole",
+      type: "Machine Clean",
+      usage: "Food Ind; Culinary; Pharmaceutical; Cosmetic",
+      varietyAvailable: "Alleppey; Salem/Erode; Nizamabad; Sangali",
+      color: "Bright Yellow to Deep Yellow",
+      harvestingSeason: "Feb - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   },
   {
     slug: "turmeric-powder",
@@ -1059,6 +1269,19 @@ export const products: Product[] = [
       "Culinary uses: Turmeric is a staple in Indian cuisine and is increasingly used globally for its color, flavor, and as a natural dye.",
       "Health and wellness: Growing awareness of its antioxidant and anti-inflammatory properties has increased demand for use in health supplements, functional foods, and cosmetics.",
     ],
+    exportSpecification: {
+      formAvailable: "Ground Powder",
+      type: "Machine Grind",
+      usage: "Food Ind; Culinary; Pharmaceutical; Cosmetic",
+      color: "Bright Yellow to Golden Yellow",
+      harvestingSeason: "Feb - March",
+      shelfLife: "1 Year From Production Date",
+      storageCondition: "Cool and Dry (20°C)",
+      microbiological: "As Per Buyer's Requirement & Importing Country Norms",
+      packaging: "5KG; 10KG; 15KG; 25KG (Customized As Per Buyer's Requirement)",
+      labelling: "Customized Labelling As Per Buyer's Requirement",
+      moq: "10 MT",
+    },
   }
 ];
 

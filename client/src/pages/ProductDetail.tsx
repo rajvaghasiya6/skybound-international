@@ -9,6 +9,7 @@ import {
   ArrowLeft,
   Award,
   CheckCircle2,
+  FileText,
   Heart,
   Info,
   Leaf,
@@ -109,7 +110,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                   Overview
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent>
                 {product.overview.map((paragraph, index) => (
                   <p key={index} className="text-base leading-relaxed text-foreground/90">
                     {paragraph}
@@ -121,19 +122,27 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
           {/* Description */}
           <Card className="mb-8">
-            <CardContent className="p-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-primary" />
+                  Description
+                </CardTitle>
+              </CardHeader>
+            <CardContent>
               <p className="text-base leading-relaxed text-foreground/90">{product.description}</p>
             </CardContent>
           </Card>
 
-          {/* Product Highlights & Specs Grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card>
-              <CardContent className="p-5 space-y-3">
-                <div className="flex items-center gap-2">
+          {/* Product Highlights */}
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
                   <Leaf className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold">Product Highlights</h3>
-                </div>
+                  Product Highlights
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-5 space-y-3">
+                
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {product.highlights.map((point) => (
                     <li key={point} className="flex items-start gap-2">
@@ -144,24 +153,6 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                 </ul>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardContent className="p-5 space-y-3">
-                <div className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold">Export Specifications</h3>
-                </div>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  {product.specs.map((spec) => (
-                    <li key={spec.label} className="flex justify-between gap-3">
-                      <span className="text-foreground/80">{spec.label}</span>
-                      <span className="font-medium text-foreground">{spec.value}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
 
           {/* Culinary Uses */}
           {product.culinaryUses && product.culinaryUses.length > 0 && (
@@ -230,12 +221,16 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
           )}
 
           {/* Applications */}
-          <Card className="mb-8">
-            <CardContent className="p-5 space-y-3">
-              <div className="flex items-center gap-2">
+          
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
                 <Utensils className="h-5 w-5 text-primary" />
-                <h3 className="font-semibold">Industrial Applications</h3>
-              </div>
+                 Industrial Applications
+                </CardTitle>
+              </CardHeader>
+            <CardContent>
+             
               <div className="flex flex-wrap gap-2">
                 {product.applications.map((application) => (
                   <Badge key={application} variant="outline">
@@ -270,7 +265,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
           {/* Top Importing Countries */}
           {product.importingCountries && product.importingCountries.length > 0 && (
-            <Card className="mb-12">
+            <Card className="mb-8">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Award className="h-5 w-5 text-primary" />
@@ -289,49 +284,115 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
             </Card>
           )}
 
-          {/* Related Products
-          {relatedProducts.length > 0 && (
-            <div className="space-y-4" id="products">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm uppercase text-muted-foreground tracking-wide">More from Skybound</p>
-                  <h2 className="font-serif text-2xl font-bold">Related products</h2>
+          {/* Export Specifications Table */}
+          {product.exportSpecification && (
+            <Card className="mb-12">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="h-5 w-5 text-primary" />
+                  Export Specifications
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <tbody>
+                      {product.exportSpecification.formAvailable && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30 w-1/3">Form Available</td>
+                          <td className="py-3 px-4">{product.exportSpecification.formAvailable}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.type && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Type</td>
+                          <td className="py-3 px-4">{product.exportSpecification.type}</td>
+                        </tr>
+                      )}
+                      {product.botanicalName && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Botanical Name</td>
+                          <td className="py-3 px-4 italic">{product.botanicalName}</td>
+                        </tr>
+                      )}
+                      <tr className="border-b">
+                        <td className="py-3 px-4 font-semibold bg-muted/30">Origin</td>
+                        <td className="py-3 px-4">India</td>
+                      </tr>
+                      {product.exportSpecification.usage && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Usage</td>
+                          <td className="py-3 px-4">{product.exportSpecification.usage}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.varietyAvailable && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Variety Available</td>
+                          <td className="py-3 px-4">{product.exportSpecification.varietyAvailable}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.color && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Color</td>
+                          <td className="py-3 px-4">{product.exportSpecification.color}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.harvestingSeason && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Harvesting Season</td>
+                          <td className="py-3 px-4">{product.exportSpecification.harvestingSeason}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.shelfLife && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Shelf Life</td>
+                          <td className="py-3 px-4">{product.exportSpecification.shelfLife}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.storageCondition && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Storage Condition</td>
+                          <td className="py-3 px-4">{product.exportSpecification.storageCondition}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.microbiological && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Microbiological Parameter</td>
+                          <td className="py-3 px-4">{product.exportSpecification.microbiological}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.packaging && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Packaging</td>
+                          <td className="py-3 px-4">{product.exportSpecification.packaging}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.labelling && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">Labelling</td>
+                          <td className="py-3 px-4">{product.exportSpecification.labelling}</td>
+                        </tr>
+                      )}
+                      {product.exportSpecification.moq && (
+                        <tr className="border-b">
+                          <td className="py-3 px-4 font-semibold bg-muted/30">MOQ</td>
+                          <td className="py-3 px-4 font-semibold text-primary">{product.exportSpecification.moq}</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
-                <Link href="/products">
-                  <Button variant="ghost">View all</Button>
-                </Link>
-              </div>
 
-              <div className="grid md:grid-cols-3 gap-4">
-                {relatedProducts.map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/products/${item.slug}`}
-                    className="group block"
-                    aria-label={`View ${item.title}`}
-                  >
-                    <Card className="overflow-hidden h-full border hover:border-primary/40 transition-colors">
-                      <div className="relative">
-                        <img src={item.image} alt={item.title} className="w-full aspect-video object-cover" />
-                      </div>
-                      <CardContent className="p-4 space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="text-xs">
-                            {item.items[0]}
-                          </Badge>
-                          <Badge variant="secondary" className="text-xs">
-                            {item.items[1] ?? "Export"}
-                          </Badge>
-                        </div>
-                        <h3 className="font-semibold group-hover:text-primary transition-colors">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground line-clamp-2">{item.summary}</p>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )} */}
+                <div className="mt-4 p-3 bg-primary/5 rounded-lg">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Note:</strong> Detailed specification sheets available upon request. 
+                    All products comply with FSSAI, ISO, and importing country standards.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
         </div>
       </main>
 
