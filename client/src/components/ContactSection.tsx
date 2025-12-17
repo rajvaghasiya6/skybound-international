@@ -126,19 +126,20 @@ export default function ContactSection() {
                 <form 
                     onSubmit={handleSubmit} 
                     className="space-y-6"
-                    // Set action to Formsubmit endpoint with the target email
+                    // Set action to Formsubmit endpoint with the token
                    action={`https://formsubmit.co/${FORMSUBMIT_TOKEN}`}
                     method="POST"
                 >
                     {/* Hidden fields for Formsubmit configuration */}
-                    {/* Sets the 'Reply To' address in the received email */}
                     <input type="hidden" name="_replyto" value={formData.email} /> 
-                    {/* Custom subject line */}
                     <input type="hidden" name="_subject" value={`New Inquiry: ${formData.product} - ${formData.name}`} /> 
-                    {/* Disables CAPTCHA/recaptcha (only works after 1 verified submission) */}
-                    <input type="hidden" name="_captcha" value="false" /> 
-                    {/* Optional: Redirect URL after submission */}
-                    {/* <input type="hidden" name="_next" value="YOUR_SUCCESS_PAGE_URL" /> */}
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input 
+                      type="hidden" 
+                      name="_next" 
+                      // **REPLACE THIS URL** with the exact URL of your contact page.
+                      value="https://skyboundinternational.co.in/#contact?submitted=true" 
+                    />
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">

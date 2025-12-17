@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { products } from "@/data/products";
 import { motion, useInView } from "framer-motion";
@@ -9,6 +10,7 @@ import { Link } from "wouter";
 export default function ProductsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const displayProducts = products.slice(0, 6);
 
   return (
     <section id="products" className="py-20 lg:py-32 bg-muted/30 overflow-hidden">
@@ -30,7 +32,7 @@ export default function ProductsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {products.map((product, index) => (
+          {displayProducts.map((product, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
@@ -56,13 +58,23 @@ export default function ProductsSection() {
                         transition={{ duration: 0.5 }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {product.botanicalName && (
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <Badge variant="secondary" className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                            {product.botanicalName}
+                          </Badge>
+                        </div>
+                      )}
                     </div>
                     <CardContent className="p-6">
                       <h3 className="font-serif text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
                         {product.title}
                       </h3>
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                        {product.summary}
+                      </p>
                       <ul className="text-muted-foreground text-sm space-y-1.5 mb-4">
-                        {product.items.map((item, i) => (
+                        {product.items.slice(0, 3).map((item, i) => (
                           <motion.li
                             key={i}
                             className="flex items-center gap-2"
@@ -79,7 +91,7 @@ export default function ProductsSection() {
                         className="flex items-center text-primary font-medium text-sm"
                         whileHover={{ x: 5 }}
                       >
-                        <span>Explore Products</span>
+                        <span>View Full Details</span>
                         <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                       </motion.div>
                     </CardContent>
@@ -89,6 +101,20 @@ export default function ProductsSection() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <Link href="/products">
+            <Button size="lg" variant="outline">
+              View All Products
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
