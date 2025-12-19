@@ -19,9 +19,8 @@ import { useRef, useState } from "react";
 
 const productInterests = products.map(p => p.title);
 
-// The email where you want to receive inquiries
-const RECIPIENT_EMAIL = "contact@skyboundinternational.co.in";
-const FORMSUBMIT_TOKEN = "80000598ba1e609d2de073b48edf758a";
+// StaticForms API Key - REPLACE WITH YOUR ACTUAL KEY
+const STATICFORMS_API_KEY = "sf_7dn1inh86id7df20g7bb9m7d";
 
 export default function ContactSection() {
   const { toast } = useToast();
@@ -36,25 +35,67 @@ export default function ContactSection() {
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false); // We still need this for the loading animation
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // --- SUBMIT LOGIC REMAINS SIMPLE FOR HTML FORM ---
-  const handleSubmit = (e: React.FormEvent) => {
-    // We only set the submitting state here to show the spinner.
-    // The actual form data is handled by the 'action' attribute on the <form> element.
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSubmitting(true);
-    
-    // NOTE: After a successful Formsubmit redirect, the page will reload.
-    // If you want a seamless experience, you'll need to use a client-side fetch (like the Formspree example)
-    // or configure a redirect URL with Formsubmit that redirects back to your page with a success parameter.
-    
-    // Simulating the submission start before the browser takes over
+
+    try {
+      // Create form data object for StaticForms
+      const formDataToSend = new FormData();
+      formDataToSend.append("apiKey", STATICFORMS_API_KEY);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("country", formData.country);
+      formDataToSend.append("product", formData.product);
+      formDataToSend.append("message", formData.message);
+      formDataToSend.append("subject", `New Inquiry from ${formData.name} - ${formData.product}`);
+      formDataToSend.append("replyTo", formData.email);
+
+      console.log("Submitting form data:", {
+        name: formData.name,
+        email: formData.email,
+        country: formData.country,
+        product: formData.product,
+        message: formData.message,
+      });
+
+      const response = await fetch("https://api.staticforms.dev/submit", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      console.log("Response status:", response.status);
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+
+        if (response.ok) {
     toast({
-        title: "Sending Inquiry...",
-        description: "Please wait a moment while we send your message.",
+      title: "Message Sent Successfully! ✅",
+      description: "Thank you for your inquiry. We'll get back to you within 24 hours.",
     });
-    
-    // The browser handles the actual POST request to Formsubmit now.
+
+    setFormData({
+      name: "",
+      email: "",
+      country: "",
+      product: "",
+      message: "",
+    });
+  } else {
+    throw new Error("Submission failed");
+  }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast({
+        title: "Failed to Send Message ❌",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -116,32 +157,18 @@ export default function ContactSection() {
                 <h3 className="font-semibold text-xl mb-6 flex items-center gap-2">
                   <Send className="w-5 h-5 text-primary" /> Send us a Message
                 </h3>
-                {/* --- FORMSUBMIT INTEGRATION --- */}
+                
+                {/* StaticForms Integration */}
                 <form 
-                    onSubmit={handleSubmit} 
-                    className="space-y-6"
-                    // Set action to Formsubmit endpoint with the token
-                   action={`https://formsubmit.co/${FORMSUBMIT_TOKEN}`}
-                    method="POST"
+                  onSubmit={handleSubmit} 
+                  className="space-y-6"
                 >
-                    {/* Hidden fields for Formsubmit configuration */}
-                    <input type="hidden" name="_replyto" value={formData.email} /> 
-                    <input type="hidden" name="_subject" value={`New Inquiry: ${formData.product} - ${formData.name}`} /> 
-                    <input type="hidden" name="_captcha" value="false" />
-                    <input 
-                      type="hidden" 
-                      name="_next" 
-                      // **REPLACE THIS URL** with the exact URL of your contact page.
-                      value="https://skyboundinternational.co.in/#contact?submitted=true" 
-                    />
-
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Your Name</Label>
                       <Input
                         id="name"
-                        // REQUIRED: Add 'name' attribute for Formsubmit
-                        name="Name"
+                        name="name"
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
@@ -155,8 +182,7 @@ export default function ContactSection() {
                       <Input
                         id="email"
                         type="email"
-                        // REQUIRED: Add 'name' attribute for Formsubmit
-                        name="Email"
+                        name="email"
                         placeholder="john@company.com"
                         value={formData.email}
                         onChange={(e) => handleInputChange("email", e.target.value)}
@@ -172,8 +198,7 @@ export default function ContactSection() {
                       <Label htmlFor="country">Country</Label>
                       <Input
                         id="country"
-                        // REQUIRED: Add 'name' attribute for Formsubmit
-                        name="Country"
+                        name="country"
                         placeholder="United States"
                         value={formData.country}
                         onChange={(e) => handleInputChange("country", e.target.value)}
@@ -187,26 +212,24 @@ export default function ContactSection() {
                       <Select
                         value={formData.product}
                         onValueChange={(value) => handleInputChange("product", value)}
-                        // REQUIRED: Use the hidden input for Select value
+                        required
                       >
                         <SelectTrigger className="h-11" data-testid="select-product">
                           <SelectValue placeholder="Select product category" />
                         </SelectTrigger>
                         <SelectContent>
-                       {productInterests.map((product) => (
-                          <SelectItem key={product} value={product}>
-                            {product
-                              .split(" ")
-                              .map(
-                                (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                              )
-                              .join(" ")}
-                          </SelectItem>
-                        ))}
+                          {productInterests.map((product) => (
+                            <SelectItem key={product} value={product}>
+                              {product
+                                .split(" ")
+                                .map(
+                                  (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                                )
+                                .join(" ")}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
-                      {/* Hidden input to capture Select value for Formsubmit */}
-                      <input type="hidden" name="Product Interest" value={formData.product} />
                     </div>
                   </div>
 
@@ -214,8 +237,7 @@ export default function ContactSection() {
                     <Label htmlFor="message">Your Message</Label>
                     <Textarea
                       id="message"
-                      // REQUIRED: Add 'name' attribute for Formsubmit
-                      name="Message"
+                      name="message"
                       placeholder="Tell us about your requirements (Quantity, Packaging, Destination)..."
                       className="min-h-[120px] resize-y"
                       value={formData.message}
@@ -246,13 +268,11 @@ export default function ContactSection() {
                     </Button>
                   </motion.div>
                 </form>
-                {/* --- END FORMSUBMIT INTEGRATION --- */}
               </CardContent>
             </Card>
           </motion.div>
 
           {/* Contact Info Side */}
-          {/* ... (rest of the component remains the same) ... */}
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, x: 50 }}
@@ -314,8 +334,6 @@ export default function ContactSection() {
                 </div>
               </CardContent>
             </Card>
-
-
           </motion.div>
         </div>
       </div>

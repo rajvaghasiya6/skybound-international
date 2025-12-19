@@ -1,5 +1,5 @@
-import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { SiWhatsapp } from "react-icons/si";
 
 export default function WhatsAppFloat() {
   return (
@@ -13,8 +13,9 @@ export default function WhatsAppFloat() {
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1 }}
+      aria-label="Chat on WhatsApp"
     >
-      <MessageCircle className="w-6 h-6" />
+      <SiWhatsapp className="w-7 h-7" />
     </motion.a>
   );
 }

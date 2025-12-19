@@ -1,212 +1,177 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { products } from "@/data/products";
 import logoImage from "@assets/logo.jpg";
+import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
 import { motion } from "framer-motion";
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
-import { SiFacebook, SiInstagram, SiLinkedin } from "react-icons/si";
-
-import { products } from "@/data/products";
-import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
-
-type QuickLink =
-  | { label: string; type: "section"; href: string }
-  | { label: string; type: "external"; href: string };
-
-const quickLinks: QuickLink[] = [
-  { label: "Home", type: "section", href: "#home" },
-  { label: "About Us", type: "section", href: "#about" },
-  { label: "Products", type: "section", href: "#products" },
-  {
-    label: "Quality Assurance & Certificates",
-    type: "section",
-    href: "#quality",
-  },
-  { label: "Why Choose Us", type: "section", href: "#why-us" },
-  { label: "Connect With Us", type: "section", href: "#contact" },
-  { label: "Brochure", type: "external", href: brochurePdf },
-];
-
-const productLinks = products.slice(0, 6);
+import { useState } from "react";
+import { SiFacebook, SiInstagram } from "react-icons/si";
 
 export default function Footer() {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+
+    setStatus("loading");
+
+    // Simulate API Call (Replace with your actual backend or Mailchimp/Resend logic)
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    setStatus("success");
+    setEmail("");
+
+    // Reset back to idle after 3 seconds
+    setTimeout(() => setStatus("idle"), 3000);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <footer className="bg-foreground text-background relative">
       <motion.button
         onClick={scrollToTop}
-        className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground p-3 rounded-full shadow-xl"
+        className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground p-3 rounded-full shadow-xl z-10"
         whileHover={{ scale: 1.1, y: -3 }}
         whileTap={{ scale: 0.95 }}
-        data-testid="button-scroll-top"
       >
         <ArrowUp className="w-5 h-5" />
       </motion.button>
 
       <div className="max-w-7xl mx-auto px-4 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          <div className="lg:col-span-1">
-            <motion.div
-              className="flex items-center gap-2 mb-5"
-              whileHover={{ scale: 1.02 }}
-            >
-              <img
-                src={logoImage}
-                alt="Skybound International"
-                className="h-12 w-auto rounded"
-              />
+          
+          {/* Brand Column - Protected from Translation */}
+          <div className="lg:col-span-1 notranslate">
+            <motion.div className="flex items-center gap-2 mb-5">
+              <img src={logoImage} alt="Logo" className="h-12 w-auto rounded" />
               <div>
                 <span className="font-serif font-bold text-xl block">Skybound</span>
                 <span className="text-xs text-background/70">International</span>
               </div>
             </motion.div>
-            <p className="text-background/70 text-sm mb-6 leading-relaxed">
-              A prominent exporter of premium spices and agriculture products from India, 
-              connecting global markets with quality and reliability.
+            <p className="text-background/70 text-sm mb-6 leading-relaxed translate">
+              A prominent exporter of premium spices and agriculture products from India.
             </p>
             <div className="flex gap-2">
-              <motion.a
-                href="https://www.instagram.com/skybound_international"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-              >
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="bg-transparent border-background/30 text-background hover:bg-background/10"
-                  data-testid="button-instagram"
-                >
-                  <SiInstagram className="w-4 h-4" />
+              {[
+                { icon: SiInstagram, href: "https://www.instagram.com/skybound_international" },
+                { icon: SiFacebook, href: "https://www.facebook.com/share/16dz72MuHk/" },
+                // { icon: SiLinkedin, href: "https://www.linkedin.com" }
+              ].map((social, i) => (
+                <Button key={i} size="icon" variant="outline" asChild className="bg-transparent border-background/30 text-background hover:bg-background/10">
+                  <a href={social.href} target="_blank" rel="noopener noreferrer">
+                    <social.icon className="w-4 h-4" />
+                  </a>
                 </Button>
-              </motion.a>
-              <motion.a
-                href="https://www.facebook.com/share/16dz72MuHk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-              >
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="bg-transparent border-background/30 text-background hover:bg-background/10"
-                  data-testid="button-facebook"
-                >
-                  <SiFacebook className="w-4 h-4" />
-                </Button>
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-              >
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="bg-transparent border-background/30 text-background hover:bg-background/10"
-                  data-testid="button-linkedin"
-                >
-                  <SiLinkedin className="w-4 h-4" />
-                </Button>
-              </motion.a>
+              ))}
             </div>
           </div>
 
+          {/* Links Column */}
           <div>
             <h4 className="font-semibold text-lg mb-5">Quick Links</h4>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  {link.type === "section" ? (
-                    <motion.button
-                      onClick={() => scrollToSection(link.href)}
-                      className="text-background/70 hover:text-background text-sm transition-colors"
-                      data-testid={`link-footer-${link.label
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      whileHover={{ x: 5 }}
-                    >
-                      {link.label}
-                    </motion.button>
-                  ) : (
-                    <motion.a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-background/70 hover:text-background text-sm transition-colors inline-block"
-                      data-testid={`link-footer-${link.label
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      whileHover={{ x: 5 }}
-                    >
-                      {link.label}
-                    </motion.a>
-                  )}
+              {/* Ensure links are clickable even if translated */}
+              {["Home", "About Us", "Products", "Connect With Us"].map((label) => (
+                <li key={label}>
+                  <button
+                    onClick={() => scrollToSection(`#${label.toLowerCase().replace(/\s+/g, "")}`)}
+                    className="text-background/70 hover:text-background text-sm transition-colors"
+                  >
+                    {label}
+                  </button>
+                </li>
+              ))}
+              <li>
+                <a href={brochurePdf} target="_blank" rel="noopener noreferrer" className="text-background/70 hover:text-background text-sm">
+                   Download Brochure
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Products Column */}
+          <div>
+            <h4 className="font-semibold text-lg mb-5">Our Products</h4>
+            <ul className="space-y-3">
+              {products.slice(0, 5).map((p, i) => (
+                <li key={i}>
+                  <button onClick={() => scrollToSection("#products")} className="text-background/70 hover:text-background text-sm text-left">
+                    {p.title}
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Newsletter Column - Better Solution Logic */}
           <div>
-            <h4 className="font-semibold text-lg mb-5">Our Products</h4>
-            <ul className="space-y-3">
-              {productLinks.map((product, index) => (
-              <li key={index}>
-                <motion.button
-                  onClick={() => scrollToSection("#products")}
-                  className="text-background/70 hover:text-background text-sm transition-colors"
-                  whileHover={{ x: 5 }}
-                >
-                  {product.title.split(" ")
-                    .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
-                    .join(" ")}
-                </motion.button>
-              </li>
-            ))}
-
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-lg mb-5">Stay Updated</h4>
-            <p className="text-background/70 text-sm mb-4">
-              Subscribe to receive updates on new products and export opportunities.
+            <h4 className="font-semibold text-lg mb-5">Contact Us</h4>
+            {/* <p className="text-background/70 text-sm mb-4">
+              Get the latest export market insights.
             </p>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Your email"
-                className="bg-background/10 border-background/30 text-background placeholder:text-background/50 h-10"
-                data-testid="input-newsletter"
-              />
-              <Button variant="secondary" data-testid="button-subscribe">
-                Subscribe
+            
+            <form onSubmit={handleSubscribe} className="space-y-3">
+              <div className="relative">
+                <Input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  disabled={status !== "idle"}
+                  className="bg-background/10 border-background/30 text-background placeholder:text-background/50 h-11 pr-12"
+                />
+                <AnimatePresence>
+                  {status === "success" && (
+                    <motion.div 
+                      initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+                      className="absolute right-3 top-3 text-green-400"
+                    >
+                      <CheckCircle2 className="w-5 h-5" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <Button 
+                type="submit" 
+                variant={status === "success" ? "secondary" : "default"}
+                disabled={status !== "idle"}
+                className="w-full h-11 transition-all duration-300 relative overflow-hidden"
+              >
+                {status === "loading" ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : status === "success" ? (
+                  "Subscribed!"
+                ) : (
+                  "Subscribe Now"
+                )}
               </Button>
-            </div>
+            </form> */}
 
-            <div className="mt-8 space-y-3 text-sm text-background/70">
+            {/* Contact Details - Non-Translate for data accuracy */}
+            <div className="mt-8 space-y-3 text-sm text-background/70 notranslate">
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary" />
                 <span>+91 9859886686</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary" />
-                <span className="text-xs">contact@skyboundinternational.co.in</span>
+                <span className="text-[10px] sm:text-xs">contact@skyboundinternational.co.in</span>
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" />
-                <span className="text-xs">Surat, Gujarat, India</span>
+                <span className="translate">Surat, Gujarat, India</span>
               </div>
             </div>
           </div>
@@ -215,20 +180,10 @@ export default function Footer() {
         <Separator className="my-10 bg-background/20" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-background/60">
-          <p>&copy; {new Date().getFullYear()} Skybound International. All rights reserved.</p>
+          <p className="notranslate">&copy; {new Date().getFullYear()} Skybound International.</p>
           <div className="flex gap-6">
-            <motion.button
-              className="hover:text-background transition-colors"
-              whileHover={{ y: -2 }}
-            >
-              Privacy Policy
-            </motion.button>
-            <motion.button
-              className="hover:text-background transition-colors"
-              whileHover={{ y: -2 }}
-            >
-              Terms of Service
-            </motion.button>
+            <button className="hover:text-background transition-colors">Privacy Policy</button>
+            <button className="hover:text-background transition-colors">Terms</button>
           </div>
         </div>
       </div>
