@@ -162,16 +162,19 @@ export default function Footer() {
             <h4 className="font-semibold text-lg mb-5">Our Products</h4>
             <ul className="space-y-3">
               {productLinks.map((product, index) => (
-                <li key={index}>
-                  <motion.button
-                    onClick={() => scrollToSection("#products")}
-                    className="text-background/70 hover:text-background text-sm transition-colors"
-                    whileHover={{ x: 5 }}
-                  >
-                    {product.title}
-                  </motion.button>
-                </li>
-              ))}
+              <li key={index}>
+                <motion.button
+                  onClick={() => scrollToSection("#products")}
+                  className="text-background/70 hover:text-background text-sm transition-colors"
+                  whileHover={{ x: 5 }}
+                >
+                  {product.title.split(" ")
+                    .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase())
+                    .join(" ")}
+                </motion.button>
+              </li>
+            ))}
+
             </ul>
           </div>
 

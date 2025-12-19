@@ -11,19 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { products } from "@/data/products";
 import { useToast } from "@/hooks/use-toast";
 import { motion, useInView } from "framer-motion";
-import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useRef, useState } from "react";
 
-const productInterests = [
-  "Spices & Seasonings",
-  "Rice & Grains",
-  "Pulses & Lentils",
-  "Tea & Beverages",
-  "Nuts & Dry Fruits",
-  "Other Products",
-];
+const productInterests = products.map(p => p.title);
 
 // The email where you want to receive inquiries
 const RECIPIENT_EMAIL = "contact@skyboundinternational.co.in";
@@ -199,11 +193,16 @@ export default function ContactSection() {
                           <SelectValue placeholder="Select product category" />
                         </SelectTrigger>
                         <SelectContent>
-                          {productInterests.map((product) => (
-                            <SelectItem key={product} value={product}>
-                              {product}
-                            </SelectItem>
-                          ))}
+                       {productInterests.map((product) => (
+                          <SelectItem key={product} value={product}>
+                            {product
+                              .split(" ")
+                              .map(
+                                (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                              )
+                              .join(" ")}
+                          </SelectItem>
+                        ))}
                         </SelectContent>
                       </Select>
                       {/* Hidden input to capture Select value for Formsubmit */}
@@ -316,34 +315,7 @@ export default function ContactSection() {
               </CardContent>
             </Card>
 
-            <motion.a
-              href="https://wa.me/919859886686?text=Hello%2C%20I%27m%20interested%20in%20your%20products.%20Could%20you%20please%20share%20more%20details%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block"
-              data-testid="link-whatsapp"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Card className="bg-gradient-to-r from-green-600 to-green-500 dark:from-green-700 dark:to-green-600 text-white border-0 shadow-xl cursor-pointer overflow-hidden relative">
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[length:16px_16px]" />
-                <CardContent className="p-6 flex items-center gap-4 relative">
-                  <motion.div
-                    className="p-3 bg-white/20 rounded-xl"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <MessageCircle className="w-7 h-7" />
-                  </motion.div>
-                  <div>
-                    <p className="font-semibold text-lg">Chat on WhatsApp</p>
-                    <p className="text-white/80 text-sm">
-                      Quick response for urgent inquiries
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.a>
+
           </motion.div>
         </div>
       </div>

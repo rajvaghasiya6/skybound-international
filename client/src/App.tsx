@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import Home from "@/pages/Home";
 import Products from "@/pages/Products";
 import NotFound from "@/pages/not-found";
@@ -114,6 +115,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
+        <WhatsAppFloat />
         <Router />
       </TooltipProvider>
     </QueryClientProvider>
