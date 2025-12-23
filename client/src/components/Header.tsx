@@ -1,28 +1,41 @@
 import { Button } from "@/components/ui/button";
+import { products } from "@/data/products";
+import { toTitleCase } from "@/lib/utils";
 import logoImage from "@assets/logo.jpg";
-// Assuming you have this file
-import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
 
-type NavItem =
-  | { label: string; type: "section"; href: string }
-  | { label: string; type: "external"; href: string };
+type NavItem = { label: string; type: "section"; href: string };
 
 const navItems: NavItem[] = [
   { label: "Home", type: "section", href: "#home" },
   { label: "About Us", type: "section", href: "#about" },
   { label: "Products", type: "section", href: "#products" },
-  { label: "Quality", type: "section", href: "#quality" },
+  { label: "Quality & Certificate", type: "section", href: "#quality" },
+  { label: "Brochure", type: "section", href: "#brochure" },
   { label: "Contact", type: "section", href: "#contact" },
-  { label: "Brochure", type: "external", href: brochurePdf },
 ];
+
+const productCategories = {
+  "Whole Spices": products.filter(p => 
+    ["black-pepper", "cloves", "coriander-seed", "cumin-seed", "mustard-seed", "turmeric-finger", "dry-red-chilli"].includes(p.slug)
+  ),
+  "Ground Spices": products.filter(p => 
+    ["black-pepper-powder", "chilli-powder", "cumin-powder", "turmeric-powder", "dry-ginger-powder"].includes(p.slug)
+  ),
+  "Dehydrated Spices": products.filter(p => 
+    ["dehydrated-garlic", "dehydrated-garlic-powder", "dehydrated-onion", "dehydrated-onion-powder"].includes(p.slug)
+  ),
+};
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
+  const [, setLocation] = useLocation();
 
   const scrollToSection = (href: string) => {
     if (window.location.pathname !== '/') {
@@ -94,14 +107,53 @@ export default function Header() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
+                  className="relative"
+                  onMouseEnter={() => item.label === "Products" && setProductsDropdownOpen(true)}
+                  onMouseLeave={() => item.label === "Products" && setProductsDropdownOpen(false)}
                 >
                   <Button
                     variant="ghost"
-                    onClick={() => item.type === "section" ? scrollToSection(item.href) : window.open(item.href, '_blank')}
+                    onClick={() => scrollToSection(item.href)}
                     className="font-medium text-sm px-3"
                   >
                     {item.label}
+                    {item.label === "Products" && <ChevronDown className="w-4 h-4 ml-1" />}
                   </Button>
+                  
+                  <AnimatePresence>
+                    {item.label === "Products" && productsDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-full left-0 mt-1 bg-background border rounded-lg shadow-xl p-4 w-[600px] z-50"
+                        onMouseEnter={() => setProductsDropdownOpen(true)}
+                        onMouseLeave={() => setProductsDropdownOpen(false)}
+                      >
+                        <div className="grid grid-cols-3 gap-4">
+                          {Object.entries(productCategories).map(([category, items]) => (
+                            <div key={category}>
+                              <h3 className="font-semibold text-sm mb-2 text-primary">{category}</h3>
+                              <div className="space-y-1">
+                                {items.map((product) => (
+                                  <button
+                                    key={product.slug}
+                                    onClick={() => {
+                                      setProductsDropdownOpen(false);
+                                      setLocation(`/products/${product.slug}`);
+                                    }}
+                                    className="block w-full text-left text-xs hover:text-primary transition-colors py-1"
+                                  >
+                                    {toTitleCase(product.title)}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               ))}
             </nav>
@@ -153,10 +205,7 @@ export default function Header() {
                     key={item.label}
                     variant="ghost"
                     className="justify-start w-full text-base"
-                    onClick={() => {
-                        if(item.type === "section") scrollToSection(item.href);
-                        else window.open(item.href, '_blank');
-                    }}
+                    onClick={() => scrollToSection(item.href)}
                   >
                     {item.label}
                   </Button>

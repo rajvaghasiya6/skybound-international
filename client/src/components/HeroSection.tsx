@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Ship, Plane, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
 import heroImage from "@assets/generated_images/premium_indian_spices_hero.png";
+import { motion } from "framer-motion";
+import { ChevronDown, Plane, Ship } from "lucide-react";
 
 interface HeroSectionProps {
   onViewProducts?: () => void;
@@ -43,7 +43,7 @@ export default function HeroSection({ onViewProducts, onContact }: HeroSectionPr
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
       
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-24 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-24 text-center">
         <motion.div
           className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-5 py-2.5 mb-8 border border-white/20"
           initial={{ opacity: 0, y: 30 }}
@@ -56,24 +56,24 @@ export default function HeroSection({ onViewProducts, onContact }: HeroSectionPr
         </motion.div>
 
         <motion.h1
-          className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+          className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <span className="block">Premium Spices &</span>
+          <span className="block">Your Trusted Partner For </span>
           <motion.span
             className="block bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
           >
-            Agriculture Products
+            Premium Spices & Agriculture Products
           </motion.span>
         </motion.h1>
         
         <motion.p
-          className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed"
+          className="text-sm sm:text-lg text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}

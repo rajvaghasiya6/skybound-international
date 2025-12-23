@@ -1,14 +1,15 @@
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2 } from "lucide-react";
+import spicesImage from "@assets/generated_images/whole_spices_collection.jpg";
 import { motion, useInView } from "framer-motion";
+import { CheckCircle2 } from "lucide-react";
 import { useRef } from "react";
-import spicesImage from "@assets/generated_images/whole_spices_collection.png";
 
 const highlights = [
-  "Premium quality sourcing from India's finest regions",
-  "Rigorous quality control at every stage",
-  "Global logistics and timely delivery",
-  "Competitive pricing for bulk orders",
+  "Unmatched Product Quality",
+  "Wide Product Range",
+  "Customer Centric Approach",
+  "Reliable Supply Chain",
+  "Worldwide Reach"
 ];
 
 export default function AboutSection() {
@@ -48,10 +49,7 @@ export default function AboutSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              At SKYBOUND INTERNATIONAL, we are dedicated to connecting global markets 
-              with a diverse range of Premium Spices & Agriculture Products. Our extensive 
-              selection ensures excellence and reliability, making us a trusted name in 
-              international trade.
+              Founded with a vision to share India’s authentic spice flavours globally, Skybound International is a trusted Indian exporter delivering premium-quality Spices & Agriculture Products to customers worldwide. With strong expertise in sourcing, processing, and exporting, we ensure every product reflects the authentic aroma, purity, and flavour of India. We offer premium whole and ground spices along with dehydrated products, supported by customized packaging, grading, and reliable export management to meet diverse buyer requirements.
             </motion.p>
             
             <motion.p
@@ -60,10 +58,7 @@ export default function AboutSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              As a leading Exporter based in Surat, Gujarat, we are committed to delivering 
-              superior products that meet the highest standards of quality and freshness. 
-              Our mission is to bring the authentic flavors and agricultural richness of 
-              India to tables around the world.
+              Our commitment to quality, consistency, and global food-safety standards makes us a reliable partner for international buyers. Supported by a strong supply network and efficient export management, we are well equipped to handle bulk orders and deliver on time to international markets.
             </motion.p>
             
             <div className="space-y-4">

@@ -131,7 +131,7 @@ export default function ContactSection() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 overflow-hidden" id="contact" ref={ref}>
+    <section className="py-24 bg-background overflow-hidden" id="contact" ref={ref}>
       <div className="container px-4 mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <Badge variant="outline" className="mb-4 px-4 py-1 text-sm border-primary/20 text-primary bg-primary/5">

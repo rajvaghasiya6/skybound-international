@@ -46,17 +46,12 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
           {/* Hero Section */}
           <div className="grid lg:grid-cols-2 gap-10 items-start mb-12">
-            <Card className="overflow-hidden shadow-xl border-0">
-              <div className="relative">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover aspect-[4/3]"
-                />
-                <Badge className="absolute top-4 left-4" variant="secondary">
-                  Export Ready
-                </Badge>
-              </div>
+            <Card className="overflow-hidden shadow-xl border-0 relative">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-full object-cover aspect-[4/3]"
+              />
             </Card>
 
             <div className="space-y-6">
@@ -83,17 +78,36 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link href="/#contact">
-                  <Button>Request a quote</Button>
-                </Link>
+                <Button asChild>
+                  <a 
+                    href="https://wa.me/919859886686?text=Hello%2C%20I%20got%20your%20business%20details%20from%20website.%20I%20need%20more%20details%20about%20your%20products%20and%20services.%0A%0AThank%20you"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Enquiry on WhatsApp
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a 
+                    href="mailto:contact@skyboundinternational.co.in?subject=Product%20Enquiry&body=Hello%2C%0A%0AI%20got%20your%20business%20details%20from%20website.%20I%20need%20more%20details%20about%20your%20products%20and%20services.%0A%0AThank%20you"
+                  >
+                    Enquiry on Email
+                  </a>
+                </Button>
               </div>
             </div>
           </div>
 
           {/* Product Content */}
           <Card className="mb-12 p-6">
+            <style>{`
+              .dark .product-content .text-gray-700 { color: rgb(229 231 235) !important; }
+              .dark .product-content .bg-gray-50 { background-color: rgb(31 41 55) !important; }
+              .dark .product-content .bg-gray-100 { background-color: rgb(31 41 55) !important; }
+              .dark .product-content .border-gray-300 { border-color: rgb(75 85 99) !important; }
+            `}</style>
             <div 
-              className="prose prose-gray max-w-none"
+              className="product-content prose prose-gray dark:prose-invert max-w-none"
               dangerouslySetInnerHTML={{ __html: product.content }}
             />
           </Card>

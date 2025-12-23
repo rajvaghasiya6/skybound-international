@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { products } from "@/data/products";
+import { toTitleCase } from "@/lib/utils";
 import logoImage from "@assets/logo.jpg";
-import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
 import { motion } from "framer-motion";
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
-import { SiFacebook, SiInstagram } from "react-icons/si";
+import { SiFacebook, SiGooglemaps, SiInstagram, SiLinkedin, SiThreads, SiX } from "react-icons/si";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -40,8 +40,6 @@ export default function Footer() {
       <motion.button
         onClick={scrollToTop}
         className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground p-3 rounded-full shadow-xl z-10"
-        whileHover={{ scale: 1.1, y: -3 }}
-        whileTap={{ scale: 0.95 }}
       >
         <ArrowUp className="w-5 h-5" />
       </motion.button>
@@ -65,7 +63,13 @@ export default function Footer() {
               {[
                 { icon: SiInstagram, href: "https://www.instagram.com/skybound_international" },
                 { icon: SiFacebook, href: "https://www.facebook.com/share/16dz72MuHk/" },
-                // { icon: SiLinkedin, href: "https://www.linkedin.com" }
+                { icon: SiLinkedin, href: "https://www.linkedin.com/company/skybound-international/" },
+                { icon: SiX, href: "https://x.com/Skybound_Export" },
+                { icon: SiThreads, href: "https://www.threads.com/@skybound_international" },
+                { icon: SiGooglemaps, href: "https://maps.app.goo.gl/KHuAMZz2nrN2uuk8A?g_st=aw" },
+
+
+
               ].map((social, i) => (
                 <Button key={i} size="icon" variant="outline" asChild className="bg-transparent border-background/30 text-background hover:bg-background/10">
                   <a href={social.href} target="_blank" rel="noopener noreferrer">
@@ -80,22 +84,23 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-5">Quick Links</h4>
             <ul className="space-y-3">
-              {/* Ensure links are clickable even if translated */}
-              {["Home", "About Us", "Products", "Connect With Us"].map((label) => (
-                <li key={label}>
+              {[
+                { label: "Home", href: "#home" },
+                { label: "About Us", href: "#about" },
+                { label: "Products", href: "#products" },
+                { label: "Quality & Certificate", href: "#quality" },
+                { label: "Brochure", href: "#brochure" },
+                { label: "Contact", href: "#contact" },
+              ].map((item) => (
+                <li key={item.label}>
                   <button
-                    onClick={() => scrollToSection(`#${label.toLowerCase().replace(/\s+/g, "")}`)}
-                    className="text-background/70 hover:text-background text-sm transition-colors"
+                    onClick={() => scrollToSection(item.href)}
+                    className="text-background/70 hover:text-background text-sm transition-colors text-left"
                   >
-                    {label}
+                    {item.label}
                   </button>
                 </li>
               ))}
-              <li>
-                <a href={brochurePdf} target="_blank" rel="noopener noreferrer" className="text-background/70 hover:text-background text-sm">
-                   Download Brochure
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -106,7 +111,7 @@ export default function Footer() {
               {products.slice(0, 5).map((p, i) => (
                 <li key={i}>
                   <button onClick={() => scrollToSection("#products")} className="text-background/70 hover:text-background text-sm text-left">
-                    {p.title}
+                    {toTitleCase(p.title)}
                   </button>
                 </li>
               ))}

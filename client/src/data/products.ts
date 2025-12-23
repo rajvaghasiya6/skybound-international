@@ -1,19 +1,19 @@
-import blackPepperPowder from "@assets/generated_images/black-pepper-powder.jpg";
-import blackPepper from "@assets/generated_images/black-pepper.jpg";
-import chilliPowder from "@assets/generated_images/chilli-powder.jpg";
-import cloves from "@assets/generated_images/cloves.jpg";
-import corianderSeed from "@assets/generated_images/coriander-seed.jpg";
-import cuminPowder from "@assets/generated_images/cumin-powder.jpg";
-import cuminSeed from "@assets/generated_images/cumin-seed.jpg";
-import dehydratedGarlicPowder from "@assets/generated_images/dehydrated-garlic-powder.jpg";
-import dehydratedGarlic from "@assets/generated_images/dehydrated-garlic.jpg";
-import dehydratedOnionPowder from "@assets/generated_images/dehydrated-onion-powder.jpg";
-import dehydratedOnion from "@assets/generated_images/dehydrated-onion.jpg";
-import dryGingerPowder from "@assets/generated_images/dry-ginger-powder.jpg";
-import dryRedChilli from "@assets/generated_images/dry-red-chilli.jpg";
-import mustardSeed from "@assets/generated_images/mustard-seed.jpg";
-import turmericFinger from "@assets/generated_images/turmeric-finger.jpg";
-import turmericPowder from "@assets/generated_images/turmeric-powder.jpg";
+import blackPepperPowder from "@assets/generated_images/Black Pepper Powder.png";
+import blackPepper from "@assets/generated_images/Black Pepper.png";
+import cloves from "@assets/generated_images/Cloves.png";
+import corianderSeed from "@assets/generated_images/Coriander Seed.png";
+import cuminPowder from "@assets/generated_images/Cumin Powder.png";
+import cuminSeed from "@assets/generated_images/Cumin Seed.png";
+import dehydratedGarlic from "@assets/generated_images/Dehydrated Garlic.png";
+import dehydratedOnionPowder from "@assets/generated_images/Dehydrated Onion Powder.png";
+import dehydratedOnion from "@assets/generated_images/Dehydrated Onion.png";
+import dehydratedGarlicPowder from "@assets/generated_images/Dehydrates Garlic Powder.png";
+import dryGingerPowder from "@assets/generated_images/Dry Ginger Powder.png";
+import dryRedChilli from "@assets/generated_images/Dry Red Chilli.png";
+import mustardSeed from "@assets/generated_images/Mustard Seed.png";
+import chilliPowder from "@assets/generated_images/Red Chilli Powder.png";
+import turmericFinger from "@assets/generated_images/Turmeric Finger.png";
+import turmericPowder from "@assets/generated_images/Turmeric Powder.png";
 
 export type Product = {
   slug: string;
@@ -394,6 +394,18 @@ export const products: Product[] = [
                 <tr class="bg-gray-50">
                   <td class="border border-gray-300 p-3 font-semibold w-1/3">MOQ</td>
                   <td class="border border-gray-300 p-3 font-bold text-primary">10 MT</td>
+                </tr>
+                 <tr class="bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-semibold">Container Capacity:</td>
+                  <td class="border border-gray-300 p-3"></td>
+                </tr>
+                <tr>
+                  <td class="border border-gray-300 p-3 font-semibold">20' FT</td>
+                  <td class="border border-gray-300 p-3"></td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-semibold">40' FT</td>
+                  <td class="border border-gray-300 p-3"></td>
                 </tr>
               </tbody>
             </table>
