@@ -3,9 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import iecPdf from "@assets/certificateOfIEC.pdf";
 import fssaiPdf from "@assets/FSSAI License.pdf";
 import fssai from "@assets/generated_images/FSSAI.png";
-import gst from "@assets/generated_images/GST.png";
 import iec from "@assets/generated_images/IEC.png";
-import gstPdf from "@assets/GST Certificate 1st Page - Skybound International.pdf";
+import spiceBoard from "@assets/generated_images/spiceBoard.png";
+import spiceBoardPdf from "@assets/Spice Board.pdf";
 import { motion, useInView } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import { useRef } from "react";
@@ -21,15 +21,13 @@ const certificates = [
     name: "IEC Certificate",
     image: iec,
          onClick: () => window.open(iecPdf, "_blank"),
-
   },
   {
-    name: "GST Certificate",
-    image: gst,
-         onClick: () => window.open(gstPdf, "_blank"),
-
+    name: "Spice Board",
+    image: spiceBoard,
+         onClick: () => window.open(spiceBoardPdf, "_blank"),
   },
-    {
+  {
     name: "FSSAI Certificate",
     image: fssai,
      onClick: () => window.open(fssaiPdf, "_blank"),
