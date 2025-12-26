@@ -15,9 +15,10 @@ const navItems: NavItem[] = [
   { label: "Home", type: "section", href: "#home" },
   { label: "About Us", type: "section", href: "#about" },
   { label: "Products", type: "section", href: "#products" },
+  { label: "Why Choose Us", type: "section", href: "#whyus" },
   { label: "Quality & Certificate", type: "section", href: "#quality" },
   { label: "Brochure", type: "section", href: "#brochure" },
-  { label: "Contact", type: "section", href: "#contact" },
+  { label: "Connect With Us", type: "section", href: "#contact" },
 ];
 
 const productCategories = {
@@ -66,8 +67,8 @@ export default function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between gap-4 h-16 lg:h-20">
+      <div className="max-w-8xl mx-auto px-4">
+        <div className="flex items-center justify-between gap-2 h-16 lg:h-20">
           
           {/* Logo */}
           <motion.a
@@ -99,8 +100,8 @@ export default function Header() {
           </motion.a>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1 ml-auto">
-            <nav className="flex items-center gap-1 mr-2">
+          <div className="hidden lg:flex items-center ml-auto">
+            <nav className="flex items-center gap-2 mr-2">
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -114,7 +115,7 @@ export default function Header() {
                   <Button
                     variant="ghost"
                     onClick={() => scrollToSection(item.href)}
-                    className="font-medium text-sm px-3"
+                    className="font-medium text-sm px-2"
                   >
                     {item.label}
                     {item.label === "Products" && <ChevronDown className="w-4 h-4 ml-1" />}
@@ -130,7 +131,7 @@ export default function Header() {
                         onMouseEnter={() => setProductsDropdownOpen(true)}
                         onMouseLeave={() => setProductsDropdownOpen(false)}
                       >
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-3 gap-2">
                           {Object.entries(productCategories).map(([category, items]) => (
                             <div key={category}>
                               <h3 className="font-semibold text-sm mb-2 text-primary">{category}</h3>

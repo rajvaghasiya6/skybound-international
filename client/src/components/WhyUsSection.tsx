@@ -97,7 +97,7 @@ export default function WhyUsSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="why-us" className="py-20 lg:py-32 bg-background overflow-hidden">
+    <section id="whyus" className="py-20 lg:py-32 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-4" ref={ref}>
         <motion.div
           className="text-center mb-16"

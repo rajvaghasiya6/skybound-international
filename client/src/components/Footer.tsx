@@ -88,9 +88,10 @@ export default function Footer() {
                 { label: "Home", href: "#home" },
                 { label: "About Us", href: "#about" },
                 { label: "Products", href: "#products" },
+                { label: "Why Choose Us", href: "#whyus" },
                 { label: "Quality & Certificate", href: "#quality" },
                 { label: "Brochure", href: "#brochure" },
-                { label: "Contact", href: "#contact" },
+                { label: "Connect With Us", href: "#contact" },
               ].map((item) => (
                 <li key={item.label}>
                   <button

@@ -134,7 +134,7 @@ export default function ContactSection() {
     <section className="py-24 bg-background overflow-hidden" id="contact" ref={ref}>
       <div className="container px-4 mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-sm border-primary/20 text-primary bg-primary/5">
+          <Badge variant="secondary" className="mb-4">
             Connect With Us
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">
