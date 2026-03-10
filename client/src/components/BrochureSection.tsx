@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
-import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf";
+// import brochurePdf from "@assets/Skybound-International-Your-Trusted-Partner-for-Premium-Indian-Spices-Export.pdf"; // Restricted
+import brochureImage from "@assets/generated_images/premium_indian_spices_hero.png";
 import { motion } from "framer-motion";
-import { Download, FileText } from "lucide-react";
+import { Eye } from "lucide-react";
+import { useState } from "react";
 import { Badge } from "./ui/badge";
+import { ImagePreviewDialog } from "./ui/image-preview-dialog";
 
 export default function BrochureSection() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section id="brochure" className="py-20 bg-muted/30">
       <div className="max-w-4xl mx-auto px-4">
@@ -30,25 +35,31 @@ export default function BrochureSection() {
         >
           <Button
             size="lg"
-            onClick={() => window.open(brochurePdf, '_blank')}
+            onClick={() => setIsOpen(true)}
+            className="px-8"
           >
-            <FileText className="w-5 h-5 mr-2" />
+            <Eye className="w-5 h-5 mr-2" />
             View Brochure
           </Button>
-          <Button
+
+          {/* Download Button Removed as per restriction request */}
+          {/* <Button
             size="lg"
             variant="outline"
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = brochurePdf;
-              link.download = 'Skybound-International-Brochure.pdf';
-              link.click();
-            }}
+            onClick={() => { ... }}
           >
             <Download className="w-5 h-5 mr-2" />
             Download Brochure
-          </Button>
+          </Button> */}
         </motion.div>
+
+        <ImagePreviewDialog
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          imageSrc={brochureImage}
+          altText="Skybound International Brochure Preview"
+          title="Brochure Preview"
+        />
       </div>
     </section>
   );

@@ -1,10 +1,11 @@
+import { ContentProtection } from "@/components/ContentProtection";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import Home from "@/pages/Home";
-import Products from "@/pages/Products";
 import NotFound from "@/pages/not-found";
 import ProductDetail from "@/pages/ProductDetail";
+import Products from "@/pages/Products";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { Route, Switch, useLocation } from "wouter";
@@ -32,8 +33,22 @@ function ScrollManager() {
     // Restore or reset scroll for the new route
     const handleScroll = () => {
       isRestoringScroll.current = true;
+      const hash = window.location.hash;
 
-      if (scrollPositions.has(currentPath)) {
+      if (hash) {
+        // If there's a hash, attempt to scroll to the element
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          console.log(`Scrolled to hash: ${hash}`);
+        } else {
+          // Retry once after a short delay in case of layout timing
+          setTimeout(() => {
+            const retryElement = document.querySelector(hash);
+            if (retryElement) retryElement.scrollIntoView({ behavior: "smooth" });
+          }, 300);
+        }
+      } else if (scrollPositions.has(currentPath)) {
         // We've been to this route before - restore saved position
         const savedPosition = scrollPositions.get(currentPath) || 0;
         window.scrollTo(0, savedPosition);
@@ -46,7 +61,7 @@ function ScrollManager() {
 
       setTimeout(() => {
         isRestoringScroll.current = false;
-      }, 100);
+      }, 500); // Increased timeout to allow smooth scroll to finish
     };
 
     // Delay to ensure content is fully rendered
@@ -114,6 +129,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <ContentProtection />
         <Toaster />
         <WhatsAppFloat />
         <Router />

@@ -24,7 +24,7 @@ export default function Products() {
               Premium Export Quality
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Discover our extensive range of authentic Indian spices and agriculture products, 
+              Discover our extensive range of authentic Indian spices and agriculture products,
               sourced from the finest regions and processed to meet international standards.
             </p>
           </motion.div>

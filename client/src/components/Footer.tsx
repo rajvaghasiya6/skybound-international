@@ -7,8 +7,10 @@ import { motion } from "framer-motion";
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { SiFacebook, SiGooglemaps, SiInstagram, SiLinkedin, SiThreads, SiX } from "react-icons/si";
+import { useLocation } from "wouter";
 
 export default function Footer() {
+  const [location, setLocation] = useLocation();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
@@ -29,8 +31,18 @@ export default function Footer() {
   };
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
+    // If it's a hash link
+    if (href.startsWith("#")) {
+      if (location !== "/") {
+        // If not on home page, navigate to home with the hash
+        window.location.href = `/${href}`;
+        return;
+      }
+
+      // If already on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -46,7 +58,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          
+
           {/* Brand Column - Protected from Translation */}
           <div className="lg:col-span-1 notranslate">
             <motion.div className="flex items-center gap-2 mb-5">
@@ -167,11 +179,17 @@ export default function Footer() {
 
             {/* Contact Details - Non-Translate for data accuracy */}
             <div className="mt-8 space-y-3 text-sm text-background/70 notranslate">
-              <div className="flex items-center gap-3">
+              <div
+                onClick={() => window.location.href = "tel:+919859886686"}
+                className="flex items-center gap-3 hover:text-background transition-colors w-fit cursor-pointer"
+              >
                 <Phone className="w-4 h-4 text-primary" />
                 <span>+91 9859886686</span>
               </div>
-              <div className="flex items-center gap-3">
+              <div
+                onClick={() => window.location.href = "mailto:contact@skyboundinternational.co.in"}
+                className="flex items-center gap-3 hover:text-background transition-colors w-fit cursor-pointer"
+              >
                 <Mail className="w-4 h-4 text-primary" />
                 <span className="text-[10px] sm:text-xs">contact@skyboundinternational.co.in</span>
               </div>

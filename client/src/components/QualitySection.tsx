@@ -1,14 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import iecPdf from "@assets/certificateOfIEC.pdf";
-import fssaiPdf from "@assets/FSSAI License.pdf";
 import fssai from "@assets/generated_images/FSSAI.png";
 import iec from "@assets/generated_images/IEC.png";
 import spiceBoard from "@assets/generated_images/spiceBoard.png";
-import spiceBoardPdf from "@assets/Spice Board.pdf";
+// PDF imports removed as restricted
 import { motion, useInView } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { ImagePreviewDialog } from "./ui/image-preview-dialog";
 
 
 
@@ -16,21 +15,17 @@ import { useRef } from "react";
 
 
 const certificates = [
-
   {
     name: "IEC Certificate",
     image: iec,
-         onClick: () => window.open(iecPdf, "_blank"),
   },
   {
     name: "Spice Board",
     image: spiceBoard,
-         onClick: () => window.open(spiceBoardPdf, "_blank"),
   },
   {
     name: "FSSAI Certificate",
     image: fssai,
-     onClick: () => window.open(fssaiPdf, "_blank"),
   },
 ];
 
@@ -38,6 +33,7 @@ const certificates = [
 export default function QualitySection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [selectedCertificate, setSelectedCertificate] = useState<{ name: string, image: string } | null>(null);
 
   return (
     <section
@@ -78,8 +74,8 @@ export default function QualitySection() {
                   </h3>
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-4xl mx-auto">
-                 At Skybound International, quality isn’t just a promise—it’s our foundation. Every batch of spices undergoes comprehensive testing and quality control protocols that exceed international standards.
-Our certifications demonstrate our unwavering commitment to food safety, quality excellence, and customer confidence. We maintain full traceability from farm to export, ensuring complete transparency throughout the supply chain.
+                  At Skybound International, quality isn’t just a promise—it’s our foundation. Every batch of spices undergoes comprehensive testing and quality control protocols that exceed international standards.
+                  Our certifications demonstrate our unwavering commitment to food safety, quality excellence, and customer confidence. We maintain full traceability from farm to export, ensuring complete transparency throughout the supply chain.
                 </p>
               </CardContent>
             </Card>
@@ -98,36 +94,45 @@ Our certifications demonstrate our unwavering commitment to food safety, quality
                     Certificates
                   </h3>
                 </div>
-      <div className="flex flex-wrap justify-center items-start gap-16 pt-8">
-  {certificates.map((cert) => (
-    <button
-      key={cert.name}
-      onClick={cert.onClick}
-      className="flex flex-col items-center gap-6 group focus:outline-none"
-    >
-      {/* Frame */}
-      <div className="w-[260px] h-[360px] bg-background border-4 border-[#d4b07a] rounded-sm shadow-xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
-        <img
-          src={cert.image}
-          alt={cert.name}
-          className="object-contain w-full h-full p-4 bg-white"
-        />
-      </div>
+                <div className="flex flex-wrap justify-center items-start gap-16 pt-8">
+                  {certificates.map((cert) => (
+                    <button
+                      key={cert.name}
+                      onClick={() => setSelectedCertificate(cert)}
+                      className="flex flex-col items-center gap-6 group focus:outline-none"
+                    >
+                      {/* Frame */}
+                      <div className="w-[260px] h-[360px] bg-background border-4 border-[#d4b07a] rounded-sm shadow-xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                        <img
+                          src={cert.image}
+                          alt={cert.name}
+                          className="object-contain w-full h-full p-4 bg-white"
+                        />
+                      </div>
 
-      {/* Label */}
-      <span className="text-lg font-semibold text-foreground text-center">
-        {cert.name}
-      </span>
-    </button>
-  ))}
-</div>
+                      {/* Label */}
+                      <span className="text-lg font-semibold text-foreground text-center">
+                        {cert.name}
+                      </span>
+                    </button>
+                  ))}
+                </div>
 
               </CardContent>
             </Card>
           </motion.div>
         </div>
       </div>
-    </section>
+
+
+      <ImagePreviewDialog
+        isOpen={!!selectedCertificate}
+        onClose={() => setSelectedCertificate(null)}
+        imageSrc={selectedCertificate?.image || ""}
+        altText={selectedCertificate?.name || "Certificate"}
+        title={selectedCertificate?.name}
+      />
+    </section >
   );
 }
 

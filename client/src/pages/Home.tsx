@@ -1,13 +1,13 @@
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import StatsSection from "@/components/StatsSection";
 import AboutSection from "@/components/AboutSection";
-import ProductsSection from "@/components/ProductsSection";
-import QualitySection from "@/components/QualitySection";
-import WhyUsSection from "@/components/WhyUsSection";
 import BrochureSection from "@/components/BrochureSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import ProductsSection from "@/components/ProductsSection";
+import QualitySection from "@/components/QualitySection";
+import StatsSection from "@/components/StatsSection";
+import WhyUsSection from "@/components/WhyUsSection";
 
 export default function Home() {
   return (

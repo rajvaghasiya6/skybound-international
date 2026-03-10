@@ -46,7 +46,7 @@ export default function LanguageSwitcher() {
   // Initialize Google Translate
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/([^/]+)\/([^;]+)/);
-    if (match && match[2] && match[2] !== 'auto') { 
+    if (match && match[2] && match[2] !== 'auto') {
       setSelectedLang(match[2]);
     }
 
@@ -109,7 +109,7 @@ export default function LanguageSwitcher() {
       const domain = window.location.hostname;
       document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain}`;
       document.cookie = `googtrans=/en/${langCode}; path=/`;
-      
+
       // Force page reload to apply translation
       window.location.reload();
     }, 100);

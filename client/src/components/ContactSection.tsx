@@ -70,22 +70,22 @@ export default function ContactSection() {
       const responseData = await response.json();
       console.log("Response data:", responseData);
 
-        if (response.ok) {
-    toast({
-      title: "Message Sent Successfully! ✅",
-      description: "Thank you for your inquiry. We'll get back to you within 24 hours.",
-    });
+      if (response.ok) {
+        toast({
+          title: "Message Sent Successfully! ✅",
+          description: "Thank you for your inquiry. We'll get back to you within 24 hours.",
+        });
 
-    setFormData({
-      name: "",
-      email: "",
-      country: "",
-      product: "",
-      message: "",
-    });
-  } else {
-    throw new Error("Submission failed");
-  }
+        setFormData({
+          name: "",
+          email: "",
+          country: "",
+          product: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Submission failed");
+      }
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
@@ -157,10 +157,10 @@ export default function ContactSection() {
                 <h3 className="font-semibold text-xl mb-6 flex items-center gap-2">
                   <Send className="w-5 h-5 text-primary" /> Send us a Message
                 </h3>
-                
+
                 {/* StaticForms Integration */}
-                <form 
-                  onSubmit={handleSubmit} 
+                <form
+                  onSubmit={handleSubmit}
                   className="space-y-6"
                 >
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -300,13 +300,15 @@ export default function ContactSection() {
                       <div>
                         <p className="font-medium">{item.label}</p>
                         {item.href ? (
-                          <a
-                            href={item.href}
-                            className="text-muted-foreground hover:text-primary transition-colors"
+                          <span
+                            onClick={() => {
+                              if (item.href) window.location.href = item.href;
+                            }}
+                            className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                             data-testid={`link-${item.label.toLowerCase()}`}
                           >
                             {item.value}
-                          </a>
+                          </span>
                         ) : (
                           <p className="text-muted-foreground text-sm leading-relaxed">
                             {item.value}
